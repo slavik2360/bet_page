@@ -1,7 +1,7 @@
 """MAIN APP"""
 
 from django.shortcuts import render
-from randoms.models import Banner
+from randoms.models.banner import Banner
 
 
 def main_page(request):

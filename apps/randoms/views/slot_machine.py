@@ -7,7 +7,7 @@ from django.views import View
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 
-from randoms.models import Banner
+from randoms.models.banner import Banner
 
 
 class SlotMachineView(View):

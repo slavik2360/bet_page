@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth import get_user_model
 
 
 class MyUserManager(BaseUserManager):
@@ -16,6 +17,9 @@ class MyUserManager(BaseUserManager):
 
         if not email:
             raise ValidationError('Email required')
+        
+        if self.model.objects.filter(email=email).exists():
+            raise ValidationError('Email already exists') 
 
         custom_user: 'MyUser' = self.model(
             email=self.normalize_email(email),
@@ -40,7 +44,8 @@ class MyUserManager(BaseUserManager):
         custom_user.is_staff = True
         custom_user.set_password(password)
         custom_user.save(using=self._db)
-        return
+        return custom_user
+    
 
 
 class MyUser(AbstractBaseUser, PermissionsMixin):
@@ -101,7 +106,7 @@ class Transaction(models.Model):
         on_delete=models.PROTECT
 
     )
-    amout = models.DecimalField(
+    amount = models.DecimalField(
         verbose_name='сумма',
         max_digits=11,
         decimal_places=2

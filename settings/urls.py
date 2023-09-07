@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path("random/", include("randoms.urls")),
-    path("auth", include("auths.urls")),
+    path("auth/", include("auths.urls")),
     path("", include("main.urls"))
 
 ]
