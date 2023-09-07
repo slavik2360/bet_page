@@ -27,8 +27,6 @@ class BetView(View):
         form = BetForm(request.POST)
         us = request.user.id
         user = MyUser.objects.get(pk=us)
-        print(user)
-        print(form.data)
         if form.is_valid():
             game = form.cleaned_data['game']
             amount = form.cleaned_data['amount']
